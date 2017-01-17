@@ -1,0 +1,14 @@
+{
+  "require": {
+    "php": ">=5.5.0",
+    "guzzlehttp/guzzle": "~6.0",
+    "kevinlebrun/colors.php": "0.*",
+    "longman/telegram-bot": "*",
+    "dg/twitter-php": "~3.6"
+  },
+  "autoload": {
+    "psr-0": {
+      "YourCurrency": "src/"
+    }
+  }
+}
