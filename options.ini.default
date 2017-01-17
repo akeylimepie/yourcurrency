@@ -1,0 +1,11 @@
+telegram[key] = ; ключ
+telegram[bot] = ; имя бота
+telegram[chat] = ; айди канала
+
+vk[token] = ; токен
+vk[group] = ; айди паблика
+
+twitter[consumer_key] = ;
+twitter[consumer_secret] = ;
+twitter[token] = ;
+twitter[secret] = ;
