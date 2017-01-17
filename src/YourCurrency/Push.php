@@ -120,6 +120,8 @@ class Push
             }
 
             $this->cache['last_cover'] = $new_cover;
+
+            file_put_contents($this->cacheFile, json_encode($this->cache));
         } else {
             $this->error('covers: 0');
         }
