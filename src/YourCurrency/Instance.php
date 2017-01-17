@@ -371,7 +371,7 @@ class Instance
         foreach (array_keys($this->cache['current']) as $what) {
 
             $value = [
-                0 => $this->cache['last'][$what],
+                0 => @$this->cache['last'][$what],
                 1 => $this->cache['current'][$what],
             ];
 
