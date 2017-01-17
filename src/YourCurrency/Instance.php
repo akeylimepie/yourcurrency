@@ -45,8 +45,8 @@ class Instance
 
             $cache_raw = file_get_contents($this->cacheFile);
         } else {
-            if (file_put_contents($this->cache, '') === false) {
-                $this->error($this->cache . ' must be writable!');
+            if (file_put_contents($this->cacheFile, '') === false) {
+                $this->error($this->cacheFile . ' must be writable!');
             }
 
             $cache_raw = null;

@@ -14,7 +14,7 @@ trait Log
     {
         if ($this->logger == null) {
             $this->logger = new Color();
-            $this->logger->setForceStyle(true);
+            #$this->logger->setForceStyle(true);
         }
     }
 
