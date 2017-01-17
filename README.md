@@ -62,7 +62,7 @@ $yourCurrencyPush->updateLast();
 $yourCurrencyPush->pushTelegram();
 ```
 
-## cron
+## crontab -e
 
 ```
 0 8,10,12,14,16,18,20,22 * * 1,2,3,4,5 cd ~/yourcurrency && php update.php && php hourly.php
