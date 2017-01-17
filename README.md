@@ -16,7 +16,7 @@
 
     $ mkdir covers
     
-В-четрвёртых, файл с данными для выгрузки. Скопируйте шаблон и укажите свои.
+В-четвёртых, файл с данными для выгрузки. Скопируйте шаблон и укажите свои.
 
     $ cp options.ini.default options.ini
 
@@ -40,11 +40,11 @@ $yourCurrency->createDailyPattern();
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-$yourCurrency = new \YourCurrency\Push(__DIR__);
-$yourCurrency->nextCover();
-$yourCurrency->hourlyImage();
+$yourCurrencyPush = new \YourCurrency\Push(__DIR__);
+$yourCurrencyPush->nextCover();
+$yourCurrencyPush->hourlyImage();
 
-$yourCurrency->pushTelegram();
+$yourCurrencyPush->pushTelegram();
 ```
 
 ## daily.php
@@ -54,12 +54,12 @@ $yourCurrency->pushTelegram();
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-$yourCurrency = new \YourCurrency\Push(__DIR__);
-$yourCurrency->nextCover();
-$yourCurrency->dailyImage();
-$yourCurrency->updateLast();
+$yourCurrencyPush = new \YourCurrency\Push(__DIR__);
+$yourCurrencyPush->nextCover();
+$yourCurrencyPush->dailyImage();
+$yourCurrencyPush->updateLast();
 
-$yourCurrency->pushTelegram();
+$yourCurrencyPush->pushTelegram();
 ```
 
 ## cron
