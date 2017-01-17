@@ -13,6 +13,7 @@ class Instance
     private $cacheFile;
     private $cache;
     private $fontDir;
+    private $layerFile;
 
     function __construct($workDir)
     {
@@ -109,15 +110,6 @@ class Instance
         $this->cache['history'] = array_slice($this->cache['history'], -$points, $points);
 
         file_put_contents($this->cacheFile, json_encode($this->cache));
-    }
-
-    public function updateLast()
-    {
-        $this->cache['last'] = $this->cache['current'];
-
-        file_put_contents($this->cacheFile, json_encode($this->cache));
-
-        $this->log('last updated', 'green');
     }
 
     public function createHourlyPattern()

@@ -27,58 +27,49 @@ class Push
         $color->setForceStyle(true);
 
         if ($workDir) {
-            echo $color('$workDir: ' . $workDir)->cyan . PHP_EOL;
+            $this->log('$workDir: ' . $workDir, 'cyan');
         } else {
-            echo $color('$workDir ?')->red . PHP_EOL;
-            exit;
+            $this->error('$workDir ?');
         }
 
         $this->optionsFile = $workDir . '/options.ini';
         $this->cacheDir = $workDir . '/cache';
         $this->cacheFile = $this->cacheDir . '/cache.yc';
         $this->coversDir = $workDir . '/covers';
-        $this->fontDir = $workDir . '/font';
-        $this->layerFile = $workDir . '/layer.png';
 
         if (is_readable($this->optionsFile)) {
             $this->options = parse_ini_file($this->optionsFile);
         } else {
-            echo $color($this->optionsFile . ' — where?')->red . PHP_EOL;
-            exit;
+            $this->error($this->optionsFile . ' — where?');
         }
 
         if (is_readable($this->cacheDir)) {
 
             if (!is_writable($this->cacheDir)) {
-                echo $color($this->cacheDir . ' must be writable!')->red . PHP_EOL;
-                exit;
+                $this->error($this->cacheDir . ' must be writable!');
             }
 
         } else {
-            echo $color($this->cacheDir . ' — where?')->red . PHP_EOL;
-            exit;
+            $this->error($this->cacheDir . ' — where?');
         }
 
         if (is_readable($this->cacheFile)) {
 
             if (!is_writable($this->cacheFile)) {
-                echo $color($this->cacheFile . ' must be writable!')->red . PHP_EOL;
-                exit;
+                $this->error($this->cacheFile . ' must be writable!');
             }
 
             $cache_raw = file_get_contents($this->cacheFile);
         } else {
             if (file_put_contents($this->cache, '') === false) {
-                echo $color($this->cache . ' must be writable!')->red . PHP_EOL;
-                exit;
+                $this->error($this->cache . ' must be writable!');
             }
 
             $cache_raw = null;
         }
 
         if (!is_readable($this->coversDir)) {
-            echo $color($this->coversDir . ' — where?')->red . PHP_EOL;
-            exit;
+            $this->error($this->coversDir . ' — where?');
         }
 
         $this->tempFile = $this->cacheDir . '/tmp.jpg';
@@ -135,7 +126,6 @@ class Push
 
         $this->log('new cover: ' . $this->cache['last_cover']);
     }
-
 
     public function hourlyImage()
     {
@@ -223,6 +213,15 @@ class Push
         );
 
         imagejpeg($output, $this->tempFile, 100);
+    }
+
+    public function updateLast()
+    {
+        $this->cache['last'] = $this->cache['current'];
+
+        file_put_contents($this->cacheFile, json_encode($this->cache));
+
+        $this->log('last updated', 'green');
     }
 
     public function pushTelegram()

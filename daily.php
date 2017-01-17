@@ -6,5 +6,6 @@ $yourCurrency = new \YourCurrency\Push(__DIR__);
 $yourCurrency->nextCover();
 
 $yourCurrency->dailyImage();
+$yourCurrency->updateLast();
 
 $yourCurrency->pushTelegram();
