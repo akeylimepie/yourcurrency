@@ -326,7 +326,7 @@ class Push
             throw new \Exception('TWITTER_CONFIG_INVALID');
         }
 
-        $this->log('Twitter...', 'yellow');
+        $this->log('Twitter...', 'yellow', false);
         $options = $this->options['twitter'];
 
         $twitter = new \Twitter(
