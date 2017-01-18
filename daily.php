@@ -7,3 +7,5 @@ $yourCurrencyPush->dailyImage();
 $yourCurrencyPush->updateLast();
 
 $yourCurrencyPush->pushTelegram();
+$yourCurrencyPush->pushVk();
+$yourCurrencyPush->pushTwitter();

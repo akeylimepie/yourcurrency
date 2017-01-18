@@ -78,7 +78,8 @@ class Instance
         if (date('d.m') === '01.04') {
         }
 
-        $caption = sprintf('%s /$   %s /€   $%s /btc   $%s /oil', $usd, $eur, $btc, $oil);
+        #$caption = sprintf('%s /$   %s /€   $%s /btc   $%s /oil', $usd, $eur, $btc, $oil);
+        $caption = sprintf('%s /$   %s /€', $usd, $eur);
         $this->cache['caption'] = $caption;
 
         $this->log($caption, 'green');

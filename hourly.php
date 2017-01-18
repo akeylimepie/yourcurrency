@@ -6,3 +6,5 @@ $yourCurrencyPush->nextCover();
 $yourCurrencyPush->hourlyImage();
 
 $yourCurrencyPush->pushTelegram();
+$yourCurrencyPush->pushVk();
+$yourCurrencyPush->pushTwitter();
