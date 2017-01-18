@@ -72,8 +72,13 @@ class Instance
 
         $usd = round($data[0]->LastTradePriceOnly, 2);
         $eur = round($data[1]->LastTradePriceOnly, 2);
-        $oil = round($data[2]->LastTradePriceOnly, 2);
         $btc = round($data[3]->LastTradePriceOnly, 2);
+
+
+        $oil_raw = $client->get('https://ru.investing.com/commodities/brent-oil')->getBody();
+
+        preg_match('/id="alertValuePrice".*value="([0-9,]+)"/U', $oil_raw, $oil_result);
+        $oil = round(str_replace(',', '.', $oil_result[1]), 2);
 
         if (date('d.m') === '01.04') {
         }
