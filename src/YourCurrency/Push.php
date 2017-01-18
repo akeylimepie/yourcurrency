@@ -252,7 +252,7 @@ class Push
             throw new \Exception('VK_CONFIG_INVALID');
         }
 
-        $this->log('Vk...', 'yellow');
+        $this->log('Vk...', 'yellow', false);
 
         $options = $this->options['vk'];
 
@@ -335,7 +335,7 @@ class Push
             $options['token'],
             $options['secret']
         );
-        $twitter->send('', new \CurlFile($this->tempFile));
+        $twitter->send('', $this->tempFile);
 
         $this->log(' done!', 'green');
     }
