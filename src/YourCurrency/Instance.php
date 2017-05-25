@@ -64,7 +64,7 @@ class Instance
             $matches);
 
         $client = new Client();
-        $result = $client->get('https://query.yahooapis.com/v1/public/yql?q=select%20LastTradePriceOnly%20from%20yahoo.finance.quote%20where%20symbol%20in%20(%22USDRUB%3DX%22%2C%22EURRUB%3DX%22%2C%22ICE%22%2C%22BTCUSD%3DX%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&time=' . time());
+        $result = $client->get('https://query.yahooapis.com/v1/public/yql?q=select LastTradePriceOnly from yahoo.finance.quote where symbol in ("USDRUB=X","EURRUB=X")&format=json&env=store://datatables.org/alltableswithkeys&time=' . time());
 
         $result = json_decode($result->getBody());
 
@@ -72,13 +72,14 @@ class Instance
 
         $usd = round($data[0]->LastTradePriceOnly, 2);
         $eur = round($data[1]->LastTradePriceOnly, 2);
-        $btc = round($data[3]->LastTradePriceOnly, 2);
-
 
         $oil_raw = $client->get('https://ru.investing.com/commodities/brent-oil')->getBody();
-
         preg_match('/id="alertValuePrice".*value="([0-9,]+)"/U', $oil_raw, $oil_result);
         $oil = round(str_replace(',', '.', $oil_result[1]), 2);
+
+        $btc_raw = $client->get('https://ru.investing.com/currencies/btc-usd')->getBody();
+        preg_match('/id="alertValuePrice".*value="([0-9,.]+)"/U', $btc_raw, $btc_result);
+        $btc = round(str_replace('.', '', $btc_result[1]), 2);
 
         if (date('d.m') === '01.04') {
         }
