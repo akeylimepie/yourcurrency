@@ -74,11 +74,11 @@ class Instance
         $eur = round($data[1]->LastTradePriceOnly, 2);
 
         $oil_raw = $client->get('https://ru.investing.com/commodities/brent-oil')->getBody();
-        preg_match('/id="alertValuePrice".*value="([0-9,]+)"/U', $oil_raw, $oil_result);
+        preg_match('/<span.+id="last_last".+>([0-9,.]+)<\/span>/U', $oil_raw, $oil_result);
         $oil = round(str_replace(',', '.', $oil_result[1]), 2);
 
         $btc_raw = $client->get('https://ru.investing.com/currencies/btc-usd')->getBody();
-        preg_match('/id="alertValuePrice".*value="([0-9,.]+)"/U', $btc_raw, $btc_result);
+        preg_match('/<span.+id="last_last".+>([0-9,.]+)<\/span>/U', $btc_raw, $btc_result);
         $btc = round(str_replace('.', '', $btc_result[1]), 2);
 
         if (date('d.m') === '01.04') {
