@@ -60,31 +60,28 @@ class Instance
     {
         $this->log('fetch data... ', 'yellow', false);
 
-        preg_match('/([0-9.]+),([0-9.]+),([0-9.]+)/', file_get_contents('http://zenrus.ru/build/js/currents.js'),
-            $matches);
-
         $client = new Client();
-        $result = $client->get('https://query.yahooapis.com/v1/public/yql?q=select LastTradePriceOnly from yahoo.finance.quote where symbol in ("USDRUB=X","EURRUB=X")&format=json&env=store://datatables.org/alltableswithkeys&time=' . time());
+        $data_raw = $client->get('https://ru.investing.com/currencies/single-currency-crosses')->getBody();
 
-        $result = json_decode($result->getBody());
+        preg_match('/USD\/RUB.+([0-9,]+)</U', $data_raw, $usd_result);
+        $usd_raw = str_replace(',', '.', $usd_result[1]);
+        $usd = number_format($usd_raw, 2);
 
-        $data = $result->query->results->quote;
+        preg_match('/EUR\/RUB.+([0-9,]+)</U', $data_raw, $eur_result);
+        $eur_raw = str_replace(',', '.', $eur_result[1]);
+        $eur = number_format($eur_raw, 2);
 
-        $usd = round($data[0]->LastTradePriceOnly, 2);
-        $eur = round($data[1]->LastTradePriceOnly, 2);
+        preg_match('/brent-oil.+([0-9,]+)</U', $data_raw, $oil_result);
+        $oil_raw = str_replace(',', '.', $oil_result[1]);
+        $oil = number_format($oil_raw, 2);
 
-        $oil_raw = $client->get('https://ru.investing.com/commodities/brent-oil')->getBody();
-        preg_match('/<span.+id="last_last".+>([0-9,.]+)<\/span>/U', $oil_raw, $oil_result);
-        $oil = round(str_replace(',', '.', $oil_result[1]), 2);
-
-        $btc_raw = $client->get('https://ru.investing.com/currencies/btc-usd')->getBody();
-        preg_match('/<span.+id="last_last".+>([0-9,.]+)<\/span>/U', $btc_raw, $btc_result);
-        $btc = round(str_replace('.', '', $btc_result[1]), 2);
+        preg_match('/BTC\/USD.+([0-9,\.]+)</U', $data_raw, $btc_result);
+        $btc_raw = str_replace(['.', ','], ['', '.'], $btc_result[1]);
+        $btc = number_format($btc_raw, 2,'.','');
 
         if (date('d.m') === '01.04') {
         }
 
-        #$caption = sprintf('%s /$   %s /€   $%s /btc   $%s /oil', $usd, $eur, $btc, $oil);
         $caption = sprintf('%s /$   %s /€', $usd, $eur);
         $this->cache['caption'] = $caption;
 
